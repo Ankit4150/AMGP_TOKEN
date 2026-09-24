@@ -95,12 +95,16 @@ export const useAuthStore = create((set, get) => ({
     }
   },
   logout: async () => {
-    try {
-      await logoutApi();
-    } catch {}
-    set({ user: null, isAuthenticated: false });
-    window.location.replace("/login");
-  },
+  try {
+    await logoutApi();
+  } catch {}
+
+  set({
+    user: null,
+    isAuthenticated: false,
+    isLoading: false,
+  });
+},
   hasPermission: (key) => hasPermission(get().user?.role, key),
 }));
 window.addEventListener("auth:unauthorized", () => {

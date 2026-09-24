@@ -1,10 +1,16 @@
 import React from "react";
 import { Bell, ChevronDown, Menu, LogOut } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../store/authStore";
 import ThemeToggle from "../ui/ThemeToggle";
 export default function Topbar({ onMenu }) {
+  const navigate = useNavigate();
   const user = useAuthStore((s) => s.user),
     logout = useAuthStore((s) => s.logout);
+    const handleLogout = async () => {
+  await logout();
+  navigate("/login", { replace: true });
+};
   const isAdmin = user?.role !== "user";
   const name = `${user?.firstName || "John"} ${user?.lastName || (isAdmin ? "Doe" : "Smith")}`;
   const initials=`${(user?.firstName||"John").charAt(0)}${(user?.lastName||(isAdmin?"Doe":"Smith")).charAt(0)}`.toUpperCase();
@@ -37,7 +43,7 @@ export default function Topbar({ onMenu }) {
           <span className="text-[11px] text-slate-300">{role}</span>
         </div>
         <button
-          onClick={logout}
+          onClick={handleLogout}
           className="grid h-8 w-7 place-items-center rounded hover:bg-white/10"
           title="Sign out"
         >
