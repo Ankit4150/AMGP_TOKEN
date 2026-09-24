@@ -1,0 +1,1 @@
+export const reconciliation=[{'id': 'REC-001', 'name': 'Demo Record 1', 'status': 'Completed', 'amount': '100 USDT', 'date': '2025-09-08 14:10'}, {'id': 'REC-002', 'name': 'Demo Record 2', 'status': 'Pending', 'amount': '200 USDT', 'date': '2025-09-07 14:11'}];

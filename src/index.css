@@ -1,0 +1,560 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap");
+@import "tailwindcss";
+
+/* Enables the `dark:` utility variant to respond to a `.dark` class on <html>,
+   toggled by the theme switch, instead of only following OS preference. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+html, body, #root { min-height: 100%; }
+body { margin: 0; min-width: 320px; background: #f5f9fe; color: #102d52; font-family: "DM Sans", ui-sans-serif, system-ui, sans-serif; overflow-x: hidden; transition: background-color 0.2s ease, color 0.2s ease; }
+button, input, select { font: inherit; }
+button { cursor: pointer; }
+* { box-sizing: border-box; }
+
+/* ---------------------------------------------------------------------- *
+ * Dark mode theme
+ * Every page in this app was built with fixed light-theme utility
+ * classes (bg-white, text-[#112e52], border-[#dce9f7], etc.) rather than
+ * `dark:` variants. Rather than hand-editing every page, these rules
+ * re-skin those exact classes whenever the <html> element has `.dark`.
+ * `~=` matches a class only when it is a whole, standalone class in the
+ * element's class list (not a substring like "bg-white/10").
+ *
+ * Some pages (AdminDashboard, UserManagement, KycVerification,
+ * InvestmentManagement, RoiManagement, AccessControl, ...) already ship
+ * their own explicit `dark:` classes. The `:not([class*="dark:PROP-"])`
+ * guards below make sure the blanket rules never fight with those —
+ * they only kick in on elements that have no dark: override of their own
+ * for that property.
+ * ---------------------------------------------------------------------- */
+
+.dark body { background: #0a1424; color: #e7eef9; }
+
+/* Page + card surfaces */
+.dark [class~="bg-white"]:not([class*="dark:bg-"]),
+.dark [class~="bg-[#f5f9fe]"]:not([class*="dark:bg-"]),
+.dark [class~="bg-[#f2f7fc]"]:not([class*="dark:bg-"]),
+.dark [class~="bg-slate-50"]:not([class*="dark:bg-"]),
+.dark [class~="bg-slate-100"]:not([class*="dark:bg-"]) {
+  background-color: #101f38 !important;
+}
+.dark [class~="bg-white/95"]:not([class*="dark:bg-"]) { background-color: rgba(16, 31, 56, 0.95) !important; }
+.dark [class~="from-[#f5f9fe]"]:not([class*="dark:from-"]) { --tw-gradient-from: #0a1424 !important; }
+.dark [class~="to-[#edf6ff]"]:not([class*="dark:to-"]) { --tw-gradient-to: #0a1424 !important; }
+
+/* Borders */
+.dark [class~="border-[#dce9f7]"]:not([class*="dark:border-"]),
+.dark [class~="border-[#d9e6f4]"]:not([class*="dark:border-"]),
+.dark [class~="border-slate-100"]:not([class*="dark:border-"]),
+.dark [class~="border-slate-200"]:not([class*="dark:border-"]) {
+  border-color: #223250 !important;
+}
+
+/* Headings / primary text (dark navy in light mode) */
+.dark [class~="text-[#102e54]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#112e52]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#112f54]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#112f55]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#15375e]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#23456e]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#24486f]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#24496f]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#274c76]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#28507f]"]:not([class*="dark:text-"]),
+.dark [class~="text-slate-700"]:not([class*="dark:text-"]) {
+  color: #f1f5fb !important;
+}
+
+/* Secondary / muted text (mid-tone slate-blue in light mode) */
+.dark [class~="text-[#254a77]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#2d5077]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#3e5d83]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#426287]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#577699]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#64809f]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#65809e]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#6681a2]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#68809d]"]:not([class*="dark:text-"]),
+.dark [class~="text-slate-500"]:not([class*="dark:text-"]),
+.dark [class~="text-slate-600"]:not([class*="dark:text-"]) {
+  color: #90a5c4 !important;
+}
+.dark [class~="text-slate-400"]:not([class*="dark:text-"]) { color: #64789c !important; }
+
+/* Skeleton loaders */
+.dark [class~="bg-slate-100"].animate-pulse:not([class*="dark:bg-"]) { background-color: #16283f !important; }
+
+/* Scrollbar (dark surfaces look better with a subtle dark scrollbar) */
+.dark ::-webkit-scrollbar-thumb { background-color: #223250; }
+
+/* ---- Auto dark-mode coverage for arbitrary hex utility classes ---- */
+/* :not([class*="dark:PROP-"]) skips elements that already carry their own dark: override for that property. */
+
+/* Neutral near-white page/card backgrounds -> dark card surface */
+.dark [class~="bg-[#e8f0ff]"]:not([class*="dark:bg-"]),
+.dark [class~="bg-[#edf2fb]"]:not([class*="dark:bg-"]),
+.dark [class~="bg-[#edf3ff]"]:not([class*="dark:bg-"]),
+.dark [class~="bg-[#eef2ff]"]:not([class*="dark:bg-"]),
+.dark [class~="bg-[#eef4ff]"]:not([class*="dark:bg-"]),
+.dark [class~="bg-[#f1f5ff]"]:not([class*="dark:bg-"]),
+.dark [class~="bg-[#f2f7fc]"]:not([class*="dark:bg-"]),
+.dark [class~="bg-[#f4f7fc]"]:not([class*="dark:bg-"]),
+.dark [class~="bg-[#f5f9fe]"]:not([class*="dark:bg-"]),
+.dark [class~="bg-[#f7f9fd]"]:not([class*="dark:bg-"]),
+.dark [class~="bg-[#f7faff]"]:not([class*="dark:bg-"]),
+.dark [class~="bg-[#f8faff]"]:not([class*="dark:bg-"]),
+.dark [class~="bg-[#fbfcfe]"]:not([class*="dark:bg-"]),
+.dark [class~="bg-[#fbfdff]"]:not([class*="dark:bg-"]) {
+  background-color: #101f38 !important;
+}
+
+/* Colored pastel badge backgrounds -> tinted dark badge */
+.dark [class~="bg-[#dcf8ea]"]:not([class*="dark:bg-"]) {
+  background-color: #0f2e22 !important;
+}
+.dark [class~="bg-[#fff2e0]"]:not([class*="dark:bg-"]) {
+  background-color: #332510 !important;
+}
+.dark [class~="bg-[#fbe8f2]"]:not([class*="dark:bg-"]) {
+  background-color: #33142a !important;
+}
+.dark [class~="bg-[#ecebff]"]:not([class*="dark:bg-"]) {
+  background-color: #221f42 !important;
+}
+
+/* Pale blue-family borders -> dark border */
+.dark [class~="border-[#bfcff0]"]:not([class*="dark:border-"]),
+.dark [class~="border-[#c6d3e6]"]:not([class*="dark:border-"]),
+.dark [class~="border-[#cfe0f3]"]:not([class*="dark:border-"]),
+.dark [class~="border-[#d9e6f4]"]:not([class*="dark:border-"]),
+.dark [class~="border-[#dce5ef]"]:not([class*="dark:border-"]),
+.dark [class~="border-[#dce6f3]"]:not([class*="dark:border-"]),
+.dark [class~="border-[#dce7f3]"]:not([class*="dark:border-"]),
+.dark [class~="border-[#dce7f5]"]:not([class*="dark:border-"]),
+.dark [class~="border-[#dce8f6]"]:not([class*="dark:border-"]),
+.dark [class~="border-[#dce9f7]"]:not([class*="dark:border-"]),
+.dark [class~="border-[#dfe7f1]"]:not([class*="dark:border-"]),
+.dark [class~="border-[#dfe8f4]"]:not([class*="dark:border-"]),
+.dark [class~="border-[#e1e7f0]"]:not([class*="dark:border-"]),
+.dark [class~="border-[#e2ebf5]"]:not([class*="dark:border-"]),
+.dark [class~="border-[#e3ebf5]"]:not([class*="dark:border-"]),
+.dark [class~="border-[#e4ebf4]"]:not([class*="dark:border-"]),
+.dark [class~="border-[#e4ecf7]"]:not([class*="dark:border-"]),
+.dark [class~="border-[#e5edf6]"]:not([class*="dark:border-"]),
+.dark [class~="border-[#e6eef6]"]:not([class*="dark:border-"]),
+.dark [class~="border-[#e7eef7]"]:not([class*="dark:border-"]),
+.dark [class~="border-[#e8eef5]"]:not([class*="dark:border-"]),
+.dark [class~="border-[#edf2f7]"]:not([class*="dark:border-"]),
+.dark [class~="border-[#edf2f8]"]:not([class*="dark:border-"]),
+.dark [class~="border-[#f0f4f8]"]:not([class*="dark:border-"]) {
+  border-color: #223250 !important;
+}
+
+/* Heading-weight navy text -> bright heading */
+.dark [class~="text-[#061d38]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#0c447c]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#102e54]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#102f56]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#112e52]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#112f54]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#112f55]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#15375e]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#16375f]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#163763]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#163a62]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#17355f]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#173a65]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#173a66]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#18365f]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#183a67]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#1d3d67]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#22344a]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#23456e]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#23466f]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#23486f]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#24466f]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#24486f]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#24496f]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#244970]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#254870]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#26476e]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#26486f]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#2d3f57]"]:not([class*="dark:text-"]) {
+  color: #f1f5fb !important;
+}
+
+/* Sub-heading navy text -> bright-ish text */
+.dark [class~="text-[#24528a]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#254a77]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#274c76]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#284c76]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#28507f]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#294c74]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#294d75]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#2d5077]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#31567f]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#345577]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#365a82]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#3e5d83]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#3f5f82]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#425f82]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#426287]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#456789]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#496783]"]:not([class*="dark:text-"]) {
+  color: #d3ddec !important;
+}
+
+/* Mid-tone secondary text -> muted light text */
+.dark [class~="text-[#4f6f95]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#547399]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#55708f]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#557092]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#567394]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#567395]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#577699]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#587492]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#5b7798]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#5c7599]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#5d7593]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#5d7899]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#5e7594]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#5f7695]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#5f7898]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#6280a4]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#64809f]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#65809e]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#6681a2]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#68809d]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#68809f]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#6b82a0]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#6c82a0]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#6d82a0]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#6d83a0]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#7087a3]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#7187a4]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#7189a8]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#748aa4]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#7b8fa8]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#7d93ad]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#7d93ae]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#7d93b3]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#7f93ac]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#8194ad]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#8195ae]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#8294ac]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#8394ac]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#8395ad]"]:not([class*="dark:text-"]) {
+  color: #90a5c4 !important;
+}
+
+/* Lightest / hint text -> dim muted text */
+.dark [class~="text-[#8398b1]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#899cb4]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#8a9db5]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#8aa0bb]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#8ba0b8]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#8ca0b7]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#8da0b7]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#8da0b8]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#8ea2bb]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#8fa3c2]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#90a5c4]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#91a2b8]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#91a3b8]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#93a5ba]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#93a8c2]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#97a8bd]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#99aabd]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#9bb0ca]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#a3b0c0]"]:not([class*="dark:text-"]),
+.dark [class~="text-[#c7d5ea]"]:not([class*="dark:text-"]) {
+  color: #64789c !important;
+}
+
+/* ---- Auto dark-mode coverage for Tailwind named-color badges/chips ---- */
+/* Only applies where a page has NOT already supplied its own dark:* class for that property. */
+
+.dark [class~="bg-blue-50"]:not([class*="dark:bg-"]),
+.dark [class~="bg-blue-100"]:not([class*="dark:bg-"]) {
+  background-color: color-mix(in srgb, #3b82f6 16%, #0a1424 84%) !important;
+}
+.dark [class~="text-blue-600"]:not([class*="dark:text-"]),
+.dark [class~="text-blue-700"]:not([class*="dark:text-"]) {
+  color: color-mix(in srgb, #3b82f6 75%, white 25%) !important;
+}
+.dark [class~="border-blue-100"]:not([class*="dark:border-"]),
+.dark [class~="border-blue-200"]:not([class*="dark:border-"]),
+.dark [class~="border-blue-300"]:not([class*="dark:border-"]) {
+  border-color: color-mix(in srgb, #3b82f6 35%, #16283f 65%) !important;
+}
+.dark [class~="ring-blue-100"]:not([class*="dark:ring-"]),
+.dark [class~="ring-blue-300"]:not([class*="dark:ring-"]) {
+  --tw-ring-color: color-mix(in srgb, #3b82f6 35%, #16283f 65%) !important;
+}
+
+.dark [class~="bg-emerald-50"]:not([class*="dark:bg-"]),
+.dark [class~="bg-emerald-100"]:not([class*="dark:bg-"]) {
+  background-color: color-mix(in srgb, #10b981 16%, #0a1424 84%) !important;
+}
+.dark [class~="text-emerald-600"]:not([class*="dark:text-"]),
+.dark [class~="text-emerald-700"]:not([class*="dark:text-"]) {
+  color: color-mix(in srgb, #10b981 75%, white 25%) !important;
+}
+.dark [class~="border-emerald-100"]:not([class*="dark:border-"]),
+.dark [class~="border-emerald-200"]:not([class*="dark:border-"]),
+.dark [class~="border-emerald-300"]:not([class*="dark:border-"]) {
+  border-color: color-mix(in srgb, #10b981 35%, #16283f 65%) !important;
+}
+.dark [class~="ring-emerald-100"]:not([class*="dark:ring-"]),
+.dark [class~="ring-emerald-300"]:not([class*="dark:ring-"]) {
+  --tw-ring-color: color-mix(in srgb, #10b981 35%, #16283f 65%) !important;
+}
+
+.dark [class~="bg-amber-50"]:not([class*="dark:bg-"]),
+.dark [class~="bg-amber-100"]:not([class*="dark:bg-"]) {
+  background-color: color-mix(in srgb, #f59e0b 16%, #0a1424 84%) !important;
+}
+.dark [class~="text-amber-600"]:not([class*="dark:text-"]),
+.dark [class~="text-amber-700"]:not([class*="dark:text-"]) {
+  color: color-mix(in srgb, #f59e0b 75%, white 25%) !important;
+}
+.dark [class~="border-amber-100"]:not([class*="dark:border-"]),
+.dark [class~="border-amber-200"]:not([class*="dark:border-"]),
+.dark [class~="border-amber-300"]:not([class*="dark:border-"]) {
+  border-color: color-mix(in srgb, #f59e0b 35%, #16283f 65%) !important;
+}
+.dark [class~="ring-amber-100"]:not([class*="dark:ring-"]),
+.dark [class~="ring-amber-300"]:not([class*="dark:ring-"]) {
+  --tw-ring-color: color-mix(in srgb, #f59e0b 35%, #16283f 65%) !important;
+}
+
+.dark [class~="bg-rose-50"]:not([class*="dark:bg-"]),
+.dark [class~="bg-rose-100"]:not([class*="dark:bg-"]) {
+  background-color: color-mix(in srgb, #f43f5e 16%, #0a1424 84%) !important;
+}
+.dark [class~="text-rose-600"]:not([class*="dark:text-"]),
+.dark [class~="text-rose-700"]:not([class*="dark:text-"]) {
+  color: color-mix(in srgb, #f43f5e 75%, white 25%) !important;
+}
+.dark [class~="border-rose-100"]:not([class*="dark:border-"]),
+.dark [class~="border-rose-200"]:not([class*="dark:border-"]),
+.dark [class~="border-rose-300"]:not([class*="dark:border-"]) {
+  border-color: color-mix(in srgb, #f43f5e 35%, #16283f 65%) !important;
+}
+.dark [class~="ring-rose-100"]:not([class*="dark:ring-"]),
+.dark [class~="ring-rose-300"]:not([class*="dark:ring-"]) {
+  --tw-ring-color: color-mix(in srgb, #f43f5e 35%, #16283f 65%) !important;
+}
+
+.dark [class~="bg-violet-50"]:not([class*="dark:bg-"]),
+.dark [class~="bg-violet-100"]:not([class*="dark:bg-"]) {
+  background-color: color-mix(in srgb, #8b5cf6 16%, #0a1424 84%) !important;
+}
+.dark [class~="text-violet-600"]:not([class*="dark:text-"]),
+.dark [class~="text-violet-700"]:not([class*="dark:text-"]) {
+  color: color-mix(in srgb, #8b5cf6 75%, white 25%) !important;
+}
+.dark [class~="border-violet-100"]:not([class*="dark:border-"]),
+.dark [class~="border-violet-200"]:not([class*="dark:border-"]),
+.dark [class~="border-violet-300"]:not([class*="dark:border-"]) {
+  border-color: color-mix(in srgb, #8b5cf6 35%, #16283f 65%) !important;
+}
+.dark [class~="ring-violet-100"]:not([class*="dark:ring-"]),
+.dark [class~="ring-violet-300"]:not([class*="dark:ring-"]) {
+  --tw-ring-color: color-mix(in srgb, #8b5cf6 35%, #16283f 65%) !important;
+}
+
+.dark [class~="bg-indigo-50"]:not([class*="dark:bg-"]),
+.dark [class~="bg-indigo-100"]:not([class*="dark:bg-"]) {
+  background-color: color-mix(in srgb, #6366f1 16%, #0a1424 84%) !important;
+}
+.dark [class~="text-indigo-600"]:not([class*="dark:text-"]),
+.dark [class~="text-indigo-700"]:not([class*="dark:text-"]) {
+  color: color-mix(in srgb, #6366f1 75%, white 25%) !important;
+}
+.dark [class~="border-indigo-100"]:not([class*="dark:border-"]),
+.dark [class~="border-indigo-200"]:not([class*="dark:border-"]),
+.dark [class~="border-indigo-300"]:not([class*="dark:border-"]) {
+  border-color: color-mix(in srgb, #6366f1 35%, #16283f 65%) !important;
+}
+.dark [class~="ring-indigo-100"]:not([class*="dark:ring-"]),
+.dark [class~="ring-indigo-300"]:not([class*="dark:ring-"]) {
+  --tw-ring-color: color-mix(in srgb, #6366f1 35%, #16283f 65%) !important;
+}
+
+.dark [class~="bg-cyan-50"]:not([class*="dark:bg-"]),
+.dark [class~="bg-cyan-100"]:not([class*="dark:bg-"]) {
+  background-color: color-mix(in srgb, #06b6d4 16%, #0a1424 84%) !important;
+}
+.dark [class~="text-cyan-600"]:not([class*="dark:text-"]),
+.dark [class~="text-cyan-700"]:not([class*="dark:text-"]) {
+  color: color-mix(in srgb, #06b6d4 75%, white 25%) !important;
+}
+.dark [class~="border-cyan-100"]:not([class*="dark:border-"]),
+.dark [class~="border-cyan-200"]:not([class*="dark:border-"]),
+.dark [class~="border-cyan-300"]:not([class*="dark:border-"]) {
+  border-color: color-mix(in srgb, #06b6d4 35%, #16283f 65%) !important;
+}
+.dark [class~="ring-cyan-100"]:not([class*="dark:ring-"]),
+.dark [class~="ring-cyan-300"]:not([class*="dark:ring-"]) {
+  --tw-ring-color: color-mix(in srgb, #06b6d4 35%, #16283f 65%) !important;
+}
+
+.dark [class~="bg-orange-50"]:not([class*="dark:bg-"]),
+.dark [class~="bg-orange-100"]:not([class*="dark:bg-"]) {
+  background-color: color-mix(in srgb, #f97316 16%, #0a1424 84%) !important;
+}
+.dark [class~="text-orange-600"]:not([class*="dark:text-"]),
+.dark [class~="text-orange-700"]:not([class*="dark:text-"]) {
+  color: color-mix(in srgb, #f97316 75%, white 25%) !important;
+}
+.dark [class~="border-orange-100"]:not([class*="dark:border-"]),
+.dark [class~="border-orange-200"]:not([class*="dark:border-"]),
+.dark [class~="border-orange-300"]:not([class*="dark:border-"]) {
+  border-color: color-mix(in srgb, #f97316 35%, #16283f 65%) !important;
+}
+.dark [class~="ring-orange-100"]:not([class*="dark:ring-"]),
+.dark [class~="ring-orange-300"]:not([class*="dark:ring-"]) {
+  --tw-ring-color: color-mix(in srgb, #f97316 35%, #16283f 65%) !important;
+}
+
+.dark [class~="bg-red-50"]:not([class*="dark:bg-"]),
+.dark [class~="bg-red-100"]:not([class*="dark:bg-"]) {
+  background-color: color-mix(in srgb, #ef4444 16%, #0a1424 84%) !important;
+}
+.dark [class~="text-red-600"]:not([class*="dark:text-"]),
+.dark [class~="text-red-700"]:not([class*="dark:text-"]) {
+  color: color-mix(in srgb, #ef4444 75%, white 25%) !important;
+}
+.dark [class~="border-red-100"]:not([class*="dark:border-"]),
+.dark [class~="border-red-200"]:not([class*="dark:border-"]),
+.dark [class~="border-red-300"]:not([class*="dark:border-"]) {
+  border-color: color-mix(in srgb, #ef4444 35%, #16283f 65%) !important;
+}
+.dark [class~="ring-red-100"]:not([class*="dark:ring-"]),
+.dark [class~="ring-red-300"]:not([class*="dark:ring-"]) {
+  --tw-ring-color: color-mix(in srgb, #ef4444 35%, #16283f 65%) !important;
+}
+
+.dark [class~="bg-teal-50"]:not([class*="dark:bg-"]),
+.dark [class~="bg-teal-100"]:not([class*="dark:bg-"]) {
+  background-color: color-mix(in srgb, #14b8a6 16%, #0a1424 84%) !important;
+}
+.dark [class~="text-teal-600"]:not([class*="dark:text-"]),
+.dark [class~="text-teal-700"]:not([class*="dark:text-"]) {
+  color: color-mix(in srgb, #14b8a6 75%, white 25%) !important;
+}
+.dark [class~="border-teal-100"]:not([class*="dark:border-"]),
+.dark [class~="border-teal-200"]:not([class*="dark:border-"]),
+.dark [class~="border-teal-300"]:not([class*="dark:border-"]) {
+  border-color: color-mix(in srgb, #14b8a6 35%, #16283f 65%) !important;
+}
+.dark [class~="ring-teal-100"]:not([class*="dark:ring-"]),
+.dark [class~="ring-teal-300"]:not([class*="dark:ring-"]) {
+  --tw-ring-color: color-mix(in srgb, #14b8a6 35%, #16283f 65%) !important;
+}
+
+.dark [class~="bg-pink-50"]:not([class*="dark:bg-"]),
+.dark [class~="bg-pink-100"]:not([class*="dark:bg-"]) {
+  background-color: color-mix(in srgb, #ec4899 16%, #0a1424 84%) !important;
+}
+.dark [class~="text-pink-600"]:not([class*="dark:text-"]),
+.dark [class~="text-pink-700"]:not([class*="dark:text-"]) {
+  color: color-mix(in srgb, #ec4899 75%, white 25%) !important;
+}
+.dark [class~="border-pink-100"]:not([class*="dark:border-"]),
+.dark [class~="border-pink-200"]:not([class*="dark:border-"]),
+.dark [class~="border-pink-300"]:not([class*="dark:border-"]) {
+  border-color: color-mix(in srgb, #ec4899 35%, #16283f 65%) !important;
+}
+.dark [class~="ring-pink-100"]:not([class*="dark:ring-"]),
+.dark [class~="ring-pink-300"]:not([class*="dark:ring-"]) {
+  --tw-ring-color: color-mix(in srgb, #ec4899 35%, #16283f 65%) !important;
+}
+
+.dark [class~="bg-purple-50"]:not([class*="dark:bg-"]),
+.dark [class~="bg-purple-100"]:not([class*="dark:bg-"]) {
+  background-color: color-mix(in srgb, #a855f7 16%, #0a1424 84%) !important;
+}
+.dark [class~="text-purple-600"]:not([class*="dark:text-"]),
+.dark [class~="text-purple-700"]:not([class*="dark:text-"]) {
+  color: color-mix(in srgb, #a855f7 75%, white 25%) !important;
+}
+.dark [class~="border-purple-100"]:not([class*="dark:border-"]),
+.dark [class~="border-purple-200"]:not([class*="dark:border-"]),
+.dark [class~="border-purple-300"]:not([class*="dark:border-"]) {
+  border-color: color-mix(in srgb, #a855f7 35%, #16283f 65%) !important;
+}
+.dark [class~="ring-purple-100"]:not([class*="dark:ring-"]),
+.dark [class~="ring-purple-300"]:not([class*="dark:ring-"]) {
+  --tw-ring-color: color-mix(in srgb, #a855f7 35%, #16283f 65%) !important;
+}
+
+.dark [class~="bg-green-50"]:not([class*="dark:bg-"]),
+.dark [class~="bg-green-100"]:not([class*="dark:bg-"]) {
+  background-color: color-mix(in srgb, #22c55e 16%, #0a1424 84%) !important;
+}
+.dark [class~="text-green-600"]:not([class*="dark:text-"]),
+.dark [class~="text-green-700"]:not([class*="dark:text-"]) {
+  color: color-mix(in srgb, #22c55e 75%, white 25%) !important;
+}
+.dark [class~="border-green-100"]:not([class*="dark:border-"]),
+.dark [class~="border-green-200"]:not([class*="dark:border-"]),
+.dark [class~="border-green-300"]:not([class*="dark:border-"]) {
+  border-color: color-mix(in srgb, #22c55e 35%, #16283f 65%) !important;
+}
+.dark [class~="ring-green-100"]:not([class*="dark:ring-"]),
+.dark [class~="ring-green-300"]:not([class*="dark:ring-"]) {
+  --tw-ring-color: color-mix(in srgb, #22c55e 35%, #16283f 65%) !important;
+}
+
+.dark [class~="bg-yellow-50"]:not([class*="dark:bg-"]),
+.dark [class~="bg-yellow-100"]:not([class*="dark:bg-"]) {
+  background-color: color-mix(in srgb, #eab308 16%, #0a1424 84%) !important;
+}
+.dark [class~="text-yellow-600"]:not([class*="dark:text-"]),
+.dark [class~="text-yellow-700"]:not([class*="dark:text-"]) {
+  color: color-mix(in srgb, #eab308 75%, white 25%) !important;
+}
+.dark [class~="border-yellow-100"]:not([class*="dark:border-"]),
+.dark [class~="border-yellow-200"]:not([class*="dark:border-"]),
+.dark [class~="border-yellow-300"]:not([class*="dark:border-"]) {
+  border-color: color-mix(in srgb, #eab308 35%, #16283f 65%) !important;
+}
+.dark [class~="ring-yellow-100"]:not([class*="dark:ring-"]),
+.dark [class~="ring-yellow-300"]:not([class*="dark:ring-"]) {
+  --tw-ring-color: color-mix(in srgb, #eab308 35%, #16283f 65%) !important;
+}
+
+/* Transactions desktop table: keep every column and action visible without horizontal scrolling. */
+.transaction-table { table-layout: fixed; width: 100%; }
+.transaction-table th,
+.transaction-table td { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.transaction-table th:last-child,
+.transaction-table td:last-child { overflow: visible; text-overflow: clip; }
+
+.input {
+  width: 100%;
+  height: 42px;
+  min-width: 0;
+  border: 1px solid #d9e6f4;
+  border-radius: 10px;
+  background: #fff;
+  padding: 0 12px;
+  color: #24486f;
+  font-size: 13px;
+  outline: none;
+}
+.input:focus {
+  border-color: #3b6cf6;
+  box-shadow: 0 0 0 3px rgba(59,108,246,.12);
+}
+textarea.input {
+  height: auto;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
